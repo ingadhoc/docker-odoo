@@ -12,15 +12,15 @@ REPOSITORIES = os.path.join(SOURCES, 'repositories')
 CUSTOM = os.environ.get('CUSTOM')
 CUSTOM_REPOSITORIES = os.path.join(CUSTOM, 'repositories')
 
-addons = [
-    os.path.join(SOURCES, 'odoo', 'addons'),
-]
+addons = []
 
-# Handle versions <= 9.0, where odoo is called openerp
-if os.environ.get('ODOO_VERSION') in ['6.0', '7.0', '8.0', '9.0']:
-    addons.append(os.path.join(SOURCES, 'odoo', 'openerp', 'addons'))
-else:
-    addons.append(os.path.join(SOURCES, 'odoo', 'odoo', 'addons'))
+if os.path.isdir(os.path.join(SOURCES, 'odoo')):
+    addons.append(os.path.join(SOURCES, 'odoo', 'addons'))
+    # Handle versions <= 9.0, where odoo is called openerp
+    if os.environ.get('ODOO_VERSION') in ['6.0', '7.0', '8.0', '9.0']:
+        addons.append(os.path.join(SOURCES, 'odoo', 'openerp', 'addons'))
+    else:
+        addons.append(os.path.join(SOURCES, 'odoo', 'odoo', 'addons'))
 
 # Handle enterprise
 if os.path.isdir(os.path.join(SOURCES, 'enterprise')):
