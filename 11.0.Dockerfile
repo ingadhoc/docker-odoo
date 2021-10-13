@@ -54,7 +54,7 @@ RUN apt-get -qq update \
     && curl https://bootstrap.pypa.io/pip/3.5/get-pip.py | python3 /dev/stdin \
     && curl -sL https://deb.nodesource.com/setup_6.x | bash - \
     && apt-get update \
-    && apt-get install -yqq --no-install-recommends nodejs postgresql-client \
+    && apt-get install -yqq --no-install-recommends nodejs postgresql-client-13 \
     && curl -SLo wkhtmltox.deb https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/${WKHTMLTOPDF_VERSION}/wkhtmltox_${WKHTMLTOPDF_VERSION}-1.stretch_amd64.deb \
     && echo "${WKHTMLTOPDF_CHECKSUM}  wkhtmltox.deb" | sha256sum -c - \
     && apt-get install -yqq --no-install-recommends ./wkhtmltox.deb \
