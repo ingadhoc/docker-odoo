@@ -101,7 +101,6 @@ RUN build_deps=" \
         git+git://github.com/OCA/openupgradelib.git \
         click-odoo-contrib \
         pg_activity \
-        iputils-ping \
         phonenumbers \
     && (python3 -m compileall -q /usr/local/lib/python3.8/ || true) \
     && apt-get purge -yqq $build_deps \
