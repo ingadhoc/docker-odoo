@@ -1,4 +1,4 @@
-FROM python:3.7-slim-buster AS base
+FROM python:3.8-slim-bullseye AS base
 
 EXPOSE 8069 8072
 
@@ -54,9 +54,8 @@ RUN apt-get -qq update \
         openssh-client \
         telnet \
         vim \
-        zlibc \
         sudo \
-    && echo 'deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main' >> /etc/apt/sources.list.d/postgresql.list \
+    && echo 'deb http://apt.postgresql.org/pub/repos/apt/ bullseye-pgdg main' >> /etc/apt/sources.list.d/postgresql.list \
     && curl -SL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
     && apt-get update \
     && apt-get install -yqq --no-install-recommends postgresql-client-13 \
@@ -64,7 +63,7 @@ RUN apt-get -qq update \
     && rm -Rf wkhtmltox.deb /var/lib/apt/lists/* /tmp/* \
     && sync
 
-ARG ODOO_VERSION=13.0
+ARG ODOO_VERSION=15.0
 ARG ODOO_SOURCE=odoo/odoo
 ARG ODOO_SOURCE_DEPTH=1
 ENV ODOO_VERSION="$ODOO_VERSION"
@@ -96,13 +95,15 @@ RUN build_deps=" \
         -r https://raw.githubusercontent.com/$ODOO_SOURCE/$ODOO_VERSION/requirements.txt \
         git-aggregator \
         ipython \
+        pdfminer.six \
         pysnooper \
         ipdb \
         git+git://github.com/OCA/openupgradelib.git \
         click-odoo-contrib \
         pg_activity \
+        iputils-ping \
         phonenumbers \
-    && (python3 -m compileall -q /usr/local/lib/python3.7/ || true) \
+    && (python3 -m compileall -q /usr/local/lib/python3.8/ || true) \
     && apt-get purge -yqq $build_deps \
     && apt-get autopurge -yqq \
     && rm -Rf /var/lib/apt/lists/* /tmp/*
