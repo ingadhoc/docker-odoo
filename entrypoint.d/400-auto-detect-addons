@@ -10,6 +10,7 @@ RESOURCES = os.environ.get('RESOURCES')
 SOURCES = os.environ.get('SOURCES')
 REPOSITORIES = os.path.join(SOURCES, 'repositories')
 CUSTOM = os.environ.get('CUSTOM')
+IGNORE_SRC_REPOSITORIES = os.environ.get('IGNORE_SRC_REPOSITORIES')
 CUSTOM_REPOSITORIES = os.path.join(CUSTOM, 'repositories')
 
 addons = []
@@ -43,11 +44,12 @@ if os.path.isdir(CUSTOM_REPOSITORIES):
     ]
 
 # Add src repositories if not available on custom
-repo_addons += [
-    os.path.join(REPOSITORIES, d)
-    for d in sorted(os.listdir(REPOSITORIES))
-    if os.path.isdir(os.path.join(REPOSITORIES, d)) and d not in os.listdir(CUSTOM_REPOSITORIES)
-]
+if not IGNORE_SRC_REPOSITORIES:
+    repo_addons += [
+        os.path.join(REPOSITORIES, d)
+        for d in sorted(os.listdir(REPOSITORIES))
+        if os.path.isdir(os.path.join(REPOSITORIES, d)) and d not in os.listdir(CUSTOM_REPOSITORIES)
+    ]
 
 # Repo addons are preprended, in case we want to overwrite odoo modules
 addons = repo_addons + addons
