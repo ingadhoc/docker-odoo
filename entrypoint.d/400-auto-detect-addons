@@ -14,17 +14,22 @@ CUSTOM_REPOSITORIES = os.path.join(CUSTOM, 'repositories')
 
 addons = []
 
-if os.path.isdir(os.path.join(SOURCES, 'odoo')):
-    addons.append(os.path.join(SOURCES, 'odoo', 'addons'))
+# use odoo in custom or in src
+ODOO_PATH = os.path.join(CUSTOM, 'odoo') if os.path.isdir(os.path.join(CUSTOM, 'odoo')) else os.path.join(SOURCES, 'odoo')
+
+if os.path.isdir(ODOO_PATH):
+    addons.append(os.path.join(ODOO_PATH, 'addons'))
     # Handle versions <= 9.0, where odoo is called openerp
     if os.environ.get('ODOO_VERSION') in ['6.0', '7.0', '8.0', '9.0']:
-        addons.append(os.path.join(SOURCES, 'odoo', 'openerp', 'addons'))
+        addons.append(os.path.join(ODOO_PATH, 'openerp', 'addons'))
     else:
-        addons.append(os.path.join(SOURCES, 'odoo', 'odoo', 'addons'))
+        addons.append(os.path.join(ODOO_PATH, 'odoo', 'addons'))
 
-# Handle enterprise
-if os.path.isdir(os.path.join(SOURCES, 'enterprise')):
-    addons.insert(0, os.path.join(SOURCES, 'enterprise'))
+# Handle enterprise: use enterprise in custom or in src
+ENTERPRISE_PATH = os.path.join(CUSTOM, 'enterprise') if \
+    os.path.isdir(os.path.join(CUSTOM, 'enterprise')) else os.path.join(SOURCES, 'enterprise')
+if os.path.isdir(ENTERPRISE_PATH):
+    addons.insert(0, os.path.join(ENTERPRISE_PATH))
 
 # Project repositories
 repo_addons = []
@@ -37,11 +42,11 @@ if os.path.isdir(CUSTOM_REPOSITORIES):
         if os.path.isdir(os.path.join(CUSTOM_REPOSITORIES, d))
     ]
 
-# Add repositories
+# Add src repositories if not available on custom
 repo_addons += [
     os.path.join(REPOSITORIES, d)
     for d in sorted(os.listdir(REPOSITORIES))
-    if os.path.isdir(os.path.join(REPOSITORIES, d))
+    if os.path.isdir(os.path.join(REPOSITORIES, d)) and d not in os.listdir(CUSTOM_REPOSITORIES)
 ]
 
 # Repo addons are preprended, in case we want to overwrite odoo modules
