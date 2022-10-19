@@ -63,7 +63,7 @@ RUN apt-get -qq update \
     && rm -Rf wkhtmltox.deb /var/lib/apt/lists/* /tmp/* \
     && sync
 
-ARG ODOO_VERSION=15.0
+ARG ODOO_VERSION=16.0
 ARG ODOO_SOURCE=odoo/odoo
 ARG ODOO_SOURCE_DEPTH=1
 ENV ODOO_VERSION="$ODOO_VERSION"
