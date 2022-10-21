@@ -98,7 +98,7 @@ RUN build_deps=" \
         ipython \
         pysnooper \
         ipdb \
-        git+git://github.com/OCA/openupgradelib.git \
+        git+https://github.com/OCA/openupgradelib.git \
         click-odoo-contrib \
         pg_activity \
         phonenumbers \
