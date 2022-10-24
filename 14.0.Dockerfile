@@ -66,10 +66,8 @@ RUN apt-get -qq update \
 
 ARG ODOO_VERSION=14.0
 ARG ODOO_SOURCE=odoo/odoo
-ARG ODOO_SOURCE_DEPTH=1
 ENV ODOO_VERSION="$ODOO_VERSION"
 ENV ODOO_SOURCE="$ODOO_SOURCE"
-ENV ODOO_SOURCE_DEPTH="$ODOO_SOURCE_DEPTH"
 
 # Install Odoo hard & soft dependencies, and Doodba utilities
 RUN build_deps=" \
