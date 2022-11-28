@@ -203,6 +203,8 @@ RUN apt-get update \
         google-cloud-storage \
         git+https://github.com/rancher/client-python.git@master \
         boto3==1.9.102 \
+        # for pg_activity
+        psycopg2-binary \
     # purge
     && apt-get purge -yqq build-essential '*-dev' make || true \
     && apt-get -yqq autoremove \
