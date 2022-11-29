@@ -153,6 +153,66 @@ RUN    ln /usr/local/bin/direxec $RESOURCES/entrypoint \
 # Run build scripts
 RUN $RESOURCES/build && sync
 
+# Custom packages
+RUN apt-get update \
+    && apt-get install -y \
+        build-essential \
+        ca-certificates \
+        libcups2-dev \
+        libcurl4-openssl-dev \
+        parallel \
+        python3-dev \
+        libevent-dev \
+        libjpeg-dev \
+        libldap2-dev \
+        libsasl2-dev \
+        libssl-dev \
+        libxml2-dev \
+        libxslt1-dev \
+        swig \
+    # upgrade pip
+    && pip install --upgrade pip \
+    # pip dependencies that require build deps
+    && sudo -H -u odoo pip install --user --no-cache-dir \
+        pyOpenSSL \
+        redis==2.10.5 \
+        # for pg_activity
+        psycopg2-binary \
+        # para corregir greenlet / gevent por update de versión del paquete
+        greenlet==0.4.17 \
+        # TODO revisar si sigue siendo necesario
+        firebase_admin \
+        M2Crypto \
+        httplib2==0.20.4 \
+        git+https://github.com/pysimplesoap/pysimplesoap@a330d9c4af1b007fe1436f979ff0b9f66613136e \
+        git+https://github.com/ingadhoc/pyafipws@py3k \
+        git-aggregator==2.1.0 \
+        # for odoo upgrade scripts
+        rsync \
+        algoliasearch \
+        google-api-python-client \
+        pycurl \
+        email_validator \
+        odooly \
+        unrar \
+        PyGithub \
+        # use this genshi version to fix error when, for eg, you send arguments like "date=True" check this  \https://genshi.edgewall.org/ticket/600
+        genshi==0.7.7 \
+        git+https://github.com/adhoc-dev/aeroolib@master-fix-ods \
+        git+https://github.com/aeroo/currency2text.git \
+        mercadopago \
+        transifex-python \
+        # gdapi-python
+        dnspython3 \
+        google-cloud-storage \
+        git+https://github.com/rancher/client-python.git@master \
+        boto3==1.9.102 \
+    # purge
+    && apt-get purge -yqq build-essential '*-dev' make || true \
+    && apt-get -yqq autoremove \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+USER odoo
+
 # Entrypoint
 WORKDIR "/home/odoo"
 ENTRYPOINT ["/home/odoo/.resources/entrypoint.sh"]
