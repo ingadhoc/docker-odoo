@@ -174,6 +174,9 @@ RUN apt-get update \
     && pip install --upgrade pip \
     # pip dependencies that require build deps
     && sudo -H -u odoo pip install --user --no-cache-dir \
+        # por problema con cryptography y pyOpenSSL replicamos lo que teniamos
+        pyOpenSSL==19.0.0 \
+        cryptography==35.0.0 \
         ## cloud platform, odoo y odoo saas
         redis==2.10.5 \
         google-api-python-client \
