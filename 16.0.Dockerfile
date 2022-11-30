@@ -192,6 +192,8 @@ RUN apt-get update \
         boto3==1.9.102 \
         # for pg_activity
         psycopg2-binary \
+        ## ingadhoc/website
+        html2text \
         ## ingadhoc/odoo-uruguay
         python-stdnum>=1.16 \
         ## ingadhoc/odoo-argentina
