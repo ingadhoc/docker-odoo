@@ -176,7 +176,6 @@ RUN apt-get update \
     && sudo -H -u odoo pip install --user --no-cache-dir \
         ## cloud platform, odoo y odoo saas
         redis==2.10.5 \
-        pyOpenSSL \
         google-api-python-client \
         odooly \
         PyGithub \
@@ -193,7 +192,7 @@ RUN apt-get update \
         ## ingadhoc/odoo-uruguay
         python-stdnum>=1.16 \
         ## ingadhoc/odoo-argentina
-        M2Crypto \
+        # forzamos version httplib2==0.20.4 porque con lanzamiento de 0.21 (https://pypi.org/project/httplib2/#history) empezo a dar error de ticket 56946
         httplib2==0.20.4 \
         git+https://github.com/pysimplesoap/pysimplesoap@a330d9c4af1b007fe1436f979ff0b9f66613136e \
         git+https://github.com/ingadhoc/pyafipws@py3k \
