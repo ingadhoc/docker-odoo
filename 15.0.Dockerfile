@@ -170,6 +170,10 @@ RUN apt-get update \
         libxml2-dev \
         libxslt1-dev \
         swig \
+        # install rsync for odoo upgrade scripts
+        rsync \
+        # para ayudar en debugging (no requerido)
+        iputils-ping \
     # upgrade pip
     && pip install --upgrade pip \
     # pip dependencies that require build deps
