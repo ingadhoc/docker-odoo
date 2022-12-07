@@ -213,6 +213,8 @@ RUN apt-get update \
         # mergebot requirements
         Markdown \
         sentry-sdk \
+        # requirement de base_report_to_printer
+        pycups \
         # varios
         algoliasearch \
         pycurl \
