@@ -210,6 +210,9 @@ RUN apt-get update \
         genshi==0.7.7 \
         git+https://github.com/adhoc-dev/aeroolib@master-fix-ods \
         git+https://github.com/aeroo/currency2text.git \
+        # mergebot requirements
+        Markdown \
+        sentry-sdk \
         # varios
         algoliasearch \
         pycurl \
