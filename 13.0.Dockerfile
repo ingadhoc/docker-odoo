@@ -98,7 +98,7 @@ RUN build_deps=" \
         ipdb==0.13.9 \
         git+https://github.com/OCA/openupgradelib.git \
         click-odoo-contrib==1.16.1 \
-        pg_activity \
+        pg-activity==3.0.1 \
         phonenumbers==8.12.57 \
     && (python3 -m compileall -q /usr/local/lib/python3.7/ || true) \
     && apt-get purge -yqq $build_deps \
