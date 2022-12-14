@@ -1,4 +1,4 @@
-FROM python:3.8-slim-bullseye
+FROM python:3.10-slim-bullseye
 
 EXPOSE 8069 8072
 
@@ -91,15 +91,15 @@ RUN build_deps=" \
     && apt-get install -yqq --no-install-recommends $build_deps \
     && pip install --no-cache-dir \
         -r https://raw.githubusercontent.com/$ODOO_SOURCE/$ODOO_VERSION/requirements.txt \
-        git-aggregator \
-        ipython \
-        pdfminer.six \
-        pysnooper \
-        ipdb \
+        git-aggregator==2.1.0 \
+        ipython=8.7.0 \
+        pdfminer.six==20220319 \
+        pysnooper==1.1.1 \
+        ipdb==0.13.9 \
         git+https://github.com/OCA/openupgradelib.git \
-        click-odoo-contrib \
-        pg_activity \
-        phonenumbers \
+        click-odoo-contrib==1.16.1 \
+        pg-activity==3.0.1 \
+        phonenumbers==8.13.1 \
     && (python3 -m compileall -q /usr/local/lib/python3.8/ || true) \
     && apt-get purge -yqq $build_deps \
     && apt-get autopurge -yqq \
@@ -183,21 +183,21 @@ RUN apt-get update \
         cryptography==35.0.0 \
         ## cloud platform, odoo y odoo saas
         redis==2.10.5 \
-        google-api-python-client \
-        odooly \
-        PyGithub \
+        google-api-python-client==2.66.0 \
+        Odooly==2.1.9 \
+        PyGithub==1.57 \
         git-aggregator==2.1.0 \
         # TODO revisar si sigue siendo necesario
-        firebase_admin \
-        transifex-python \
-        dnspython3 \
-        google-cloud-storage \
+        firebase-admin==6.0.1 \
+        transifex-python==3.0.3 \
+        dnspython3==1.15.0 \
+        google-cloud-storage==2.6.0 \
         git+https://github.com/rancher/client-python.git@master \
         boto3==1.9.102 \
         # for pg_activity
         psycopg2-binary \
         ## ingadhoc/website
-        html2text \
+        html2text==2020.1.16 \
         ## ingadhoc/odoo-uruguay
         python-stdnum>=1.16 \
         ## ingadhoc/odoo-argentina
@@ -211,16 +211,16 @@ RUN apt-get update \
         git+https://github.com/adhoc-dev/aeroolib@master-fix-ods \
         git+https://github.com/aeroo/currency2text.git \
         # mergebot requirements
-        Markdown \
-        sentry-sdk \
+        Markdown==3.4.1 \
+        sentry-sdk==1.9.0 \
         # requirement de base_report_to_printer
-        pycups \
+        pycups==2.0.1 \
         # varios
-        algoliasearch \
-        pycurl \
-        email_validator \
-        unrar \
-        mercadopago \
+        algoliasearch==2.6.2 \
+        pycurl==7.45.1 \
+        email-validator==1.3.0 \
+        unrar==0.4 \
+        mercadopago==2.2.0 \
     # purge
     && apt-get purge -yqq build-essential '*-dev' make || true \
     && apt-get -yqq autoremove \

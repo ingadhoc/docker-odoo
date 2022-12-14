@@ -92,14 +92,14 @@ RUN build_deps=" \
     && apt-get install -yqq --no-install-recommends $build_deps \
     && pip install --no-cache-dir \
         -r https://raw.githubusercontent.com/$ODOO_SOURCE/$ODOO_VERSION/requirements.txt \
-        git-aggregator \
-        ipython \
-        pysnooper \
-        ipdb \
+        git-aggregator==2.1.0 \
+        ipython==7.34.0 \
+        pysnooper==1.1.1 \
+        ipdb==0.13.9 \
         git+https://github.com/OCA/openupgradelib.git \
-        click-odoo-contrib \
-        pg_activity \
-        phonenumbers \
+        click-odoo-contrib==1.16.1 \
+        pg-activity==3.0.1 \
+        phonenumbers==8.12.57 \
     && (python3 -m compileall -q /usr/local/lib/python3.7/ || true) \
     && apt-get purge -yqq $build_deps \
     && apt-get autopurge -yqq \
@@ -152,6 +152,79 @@ RUN    ln /usr/local/bin/direxec $RESOURCES/entrypoint \
 
 # Run build scripts
 RUN $RESOURCES/build && sync
+
+# Custom packages
+RUN apt-get update \
+    && apt-get install -y \
+        build-essential \
+        ca-certificates \
+        libcups2-dev \
+        libcurl4-openssl-dev \
+        parallel \
+        python3-dev \
+        libevent-dev \
+        libjpeg-dev \
+        libldap2-dev \
+        libsasl2-dev \
+        libssl-dev \
+        libxml2-dev \
+        libxslt1-dev \
+        swig \
+        # install rsync for odoo upgrade scripts
+        rsync \
+        # para ayudar en debugging (no requerido)
+        iputils-ping \
+    # upgrade pip
+    && pip install --upgrade pip \
+    # pip dependencies that require build deps
+    && sudo -H -u odoo pip install --user --no-cache-dir \
+        # por problema con cryptography y pyOpenSSL replicamos lo que teniamos
+        pyOpenSSL==22.1.0 \
+        cryptography==38.0.4 \
+        ## cloud platform, odoo y odoo saas
+        redis==2.10.5 \
+        #google-api-python-client==2.66.0 \
+        Odooly==2.1.9 \
+        #PyGithub==1.57 \
+        git-aggregator==2.1.0 \
+        # TODO revisar si sigue siendo necesario
+        #firebase_admin==6.0.1 \
+        #transifex-python==3.0.3 \
+        dnspython3==1.15.0 \
+        google-cloud-storage==2.7.0 \
+        git+https://github.com/rancher/client-python.git@master \
+        boto3==1.9.102 \
+        # for pg_activity
+        psycopg2-binary \
+        ## ingadhoc/website
+        html2text==2020.1.16 \
+        ## ingadhoc/odoo-uruguay
+        python-stdnum==1.17 \
+        ## ingadhoc/odoo-argentina
+        # forzamos version httplib2==0.20.4 porque con lanzamiento de 0.21 (https://pypi.org/project/httplib2/#history) empezo a dar error de ticket 56946
+        httplib2==0.20.4 \
+        git+https://github.com/pysimplesoap/pysimplesoap@a330d9c4af1b007fe1436f979ff0b9f66613136e \
+        git+https://github.com/ingadhoc/pyafipws@py3k \
+        ## ingadhoc/aeroo
+        # use this genshi version to fix error when, for eg, you send arguments like "date=True" check this  \https://genshi.edgewall.org/ticket/600
+        genshi==0.7.7 \
+        git+https://github.com/adhoc-dev/aeroolib@master-fix-ods \
+        git+https://github.com/aeroo/currency2text.git \
+        # requirement de base_report_to_printer
+        pycups==2.0.1 \
+        # varios
+        algoliasearch==2.6.2 \
+        #pycurl==7.45.1 \
+        email-validator==1.1.1 \
+        unrar==0.4 \
+        mercadopago==2.2.0 \
+        # arreglo de impresión de barcodes por libreria reportlab (ticket #34654)
+        reportlab==3.5.55 \
+    # purge
+    && apt-get purge -yqq build-essential '*-dev' make || true \
+    && apt-get -yqq autoremove \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+USER odoo
 
 # Entrypoint
 WORKDIR "/home/odoo"
