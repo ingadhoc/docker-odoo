@@ -188,7 +188,7 @@ RUN apt-get update \
         PyGithub==1.57 \
         git-aggregator==2.1.0 \
         # TODO revisar si sigue siendo necesario
-        firebase_admin==6.0.1 \
+        firebase-admin==6.0.1 \
         transifex-python==3.0.3 \
         dnspython3==1.15.0 \
         google-cloud-storage==2.6.0 \
