@@ -92,7 +92,7 @@ RUN build_deps=" \
     && pip install --no-cache-dir \
         -r https://raw.githubusercontent.com/$ODOO_SOURCE/$ODOO_VERSION/requirements.txt \
         git-aggregator==2.1.0 \
-        ipython=8.7.0 \
+        ipython==8.7.0 \
         pdfminer.six==20220319 \
         pysnooper==1.1.1 \
         ipdb==0.13.9 \
