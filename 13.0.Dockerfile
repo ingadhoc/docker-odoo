@@ -220,6 +220,8 @@ RUN apt-get update \
         mercadopago==2.2.0 \
         # arreglo de impresión de barcodes por libreria reportlab (ticket #34654)
         reportlab==3.5.55 \
+        # 20221216 dib: requirement de shopify para sba hasta depreciar en v15+
+        ShopifyApi==8.0.0 \
     # purge
     && apt-get purge -yqq build-essential '*-dev' make || true \
     && apt-get -yqq autoremove \
