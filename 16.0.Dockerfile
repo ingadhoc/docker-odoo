@@ -193,7 +193,7 @@ RUN apt-get update \
         dnspython3==1.15.0 \
         google-cloud-storage==2.6.0 \
         git+https://github.com/rancher/client-python.git@master \
-        boto3==1.9.102 \
+        boto3==1.26.7 \
         # for pg_activity
         psycopg2-binary \
         ## ingadhoc/website
