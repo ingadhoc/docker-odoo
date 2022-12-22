@@ -222,8 +222,7 @@ RUN apt-get update \
         unrar==0.4 \
         mercadopago==2.2.0 \
         # Fix xlrd con lógica de odoo (sistemas-contabilidad)
-        xlrd==1.1.0; python_version < '3.8' \
-        xlrd==1.2.0; python_version >= '3.8' \
+        xlrd==1.2.0 \
     # purge
     && apt-get purge -yqq build-essential '*-dev' make || true \
     && apt-get -yqq autoremove \
