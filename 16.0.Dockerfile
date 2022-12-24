@@ -215,6 +215,8 @@ RUN apt-get update \
         sentry-sdk==1.9.0 \
         # requirement de base_report_to_printer
         pycups==2.0.1 \
+        # date_range
+        odoo-test-helper==2.0.2 \
         # varios
         algoliasearch==2.6.2 \
         pycurl==7.45.1 \
