@@ -177,7 +177,7 @@ RUN apt-get update \
     # upgrade pip
     && pip install --upgrade pip \
     # pip dependencies that require build deps
-    && sudo -H -u odoo pip install --user --no-cache-dir \
+    && pip install --no-cache-dir \
         # por problema con cryptography y pyOpenSSL replicamos lo que teniamos
         pyOpenSSL==22.1.0 \
         cryptography==38.0.4 \
