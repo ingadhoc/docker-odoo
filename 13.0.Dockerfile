@@ -130,7 +130,7 @@ RUN mkdir -p $SOURCES/repositories && \
     mkdir -p $CUSTOM/repositories && \
     mkdir -p $DATA_DIR && \
     mkdir -p $CONFIG_DIR && \
-    mkdir -p $RESOURCES && \
+    mkdir -p $RESOURCES/GeoIP && \
     chown -R odoo.odoo /home/odoo && \
     sync
 
@@ -222,10 +222,20 @@ RUN apt-get update \
         reportlab==3.5.55 \
         # 20221216 dib: requirement de shopify para sba hasta depreciar en v15+
         ShopifyApi==8.0.0 \
+        # geoip
+        geoip2==4.6.0 \
     # purge
     && apt-get purge -yqq build-essential '*-dev' make || true \
     && apt-get -yqq autoremove \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# GEOIP (la key esta generada con cuenta jjs@adhoc.com.ar)
+RUN cd $RESOURCES/GeoIP \
+    && curl "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=b1CaJ9ZB1IBeR8pe&suffix=tar.gz" -o $RESOURCES/GeoIP/GeoLite2-City.tar.gz \
+    && tar -xzf $RESOURCES/GeoIP/GeoLite2-City.tar.gz -C $RESOURCES/GeoIP \
+    && find $RESOURCES/GeoIP/GeoLite2-City_* | grep "GeoLite2-City.mmdb" | xargs -I{} mv {} $RESOURCES/GeoIP \
+    && rm $RESOURCES/GeoIP/GeoLite2-City.tar.gz
+
 USER odoo
 
 # Entrypoint
