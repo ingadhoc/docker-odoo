@@ -100,7 +100,7 @@ RUN build_deps=" \
         click-odoo-contrib==1.16.1 \
         pg-activity==3.0.1 \
         phonenumbers==8.13.1 \
-    && (python3 -m compileall -q /usr/local/lib/python3.8/ || true) \
+    && (python3 -m compileall -q /usr/local/lib/python3.10/ || true) \
     && apt-get purge -yqq $build_deps \
     && apt-get autopurge -yqq \
     && rm -Rf /var/lib/apt/lists/* /tmp/*
@@ -130,7 +130,7 @@ RUN mkdir -p $SOURCES/repositories && \
     mkdir -p $CUSTOM/repositories && \
     mkdir -p $DATA_DIR && \
     mkdir -p $CONFIG_DIR && \
-    mkdir -p $RESOURCES && \
+    mkdir -p $RESOURCES/GeoIP && \
     chown -R odoo.odoo /home/odoo && \
     sync
 
@@ -177,7 +177,7 @@ RUN apt-get update \
     # upgrade pip
     && pip install --upgrade pip \
     # pip dependencies that require build deps
-    && sudo -H -u odoo pip install --user --no-cache-dir \
+    && pip install --no-cache-dir \
         # por problema con cryptography y pyOpenSSL replicamos lo que teniamos
         pyOpenSSL==19.0.0 \
         cryptography==35.0.0 \
@@ -223,10 +223,32 @@ RUN apt-get update \
         email-validator==1.3.0 \
         unrar==0.4 \
         mercadopago==2.2.0 \
+        # geoip
+        geoip2==4.6.0 \
+    # unrar para saas_provider_adhoc y unrar de agip
+    cd && wget https://www.rarlab.com/rar/unrarsrc-5.6.8.tar.gz \
+    && tar -xf unrarsrc-5.6.8.tar.gz \
+    && cd unrar \
+    && apt-get -y install make python-dev \
+    && make lib \
+    && make install-lib \
+    && rm -rf unrarsrc-5.6.8.tar.gz \
+    && rm -rf unrar \
     # purge
     && apt-get purge -yqq build-essential '*-dev' make || true \
     && apt-get -yqq autoremove \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# GEOIP (la key esta generada con cuenta jjs@adhoc.com.ar)
+RUN cd $RESOURCES/GeoIP \
+    && curl "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=b1CaJ9ZB1IBeR8pe&suffix=tar.gz" -o $RESOURCES/GeoIP/GeoLite2-City.tar.gz \
+    && tar -xzf $RESOURCES/GeoIP/GeoLite2-City.tar.gz -C $RESOURCES/GeoIP \
+    && find $RESOURCES/GeoIP/GeoLite2-City_* | grep "GeoLite2-City.mmdb" | xargs -I{} mv {} $RESOURCES/GeoIP \
+    && rm $RESOURCES/GeoIP/GeoLite2-City.tar.gz
+
+# UNRAR para padron agip
+RUN echo "export UNRAR_LIB_PATH='/usr/lib/libunrar.so'" >> /home/odoo/.bashrc
+
 USER odoo
 
 # Entrypoint
