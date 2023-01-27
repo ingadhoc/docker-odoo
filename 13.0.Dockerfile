@@ -224,6 +224,15 @@ RUN apt-get update \
         ShopifyApi==8.0.0 \
         # geoip
         geoip2==4.6.0 \
+    # unrar para saas_provider_adhoc y unrar de agip
+    cd && wget https://www.rarlab.com/rar/unrarsrc-5.6.8.tar.gz \
+        && tar -xf unrarsrc-5.6.8.tar.gz \
+        && cd unrar \
+        && apt-get -y install make python-dev \
+        && make lib \
+        && make install-lib \
+        && rm -rf unrarsrc-5.6.8.tar.gz \
+        && rm -rf unrar \
     # purge
     && apt-get purge -yqq build-essential '*-dev' make || true \
     && apt-get -yqq autoremove \
@@ -235,6 +244,9 @@ RUN cd $RESOURCES/GeoIP \
     && tar -xzf $RESOURCES/GeoIP/GeoLite2-City.tar.gz -C $RESOURCES/GeoIP \
     && find $RESOURCES/GeoIP/GeoLite2-City_* | grep "GeoLite2-City.mmdb" | xargs -I{} mv {} $RESOURCES/GeoIP \
     && rm $RESOURCES/GeoIP/GeoLite2-City.tar.gz
+
+# UNRAR para padron agip
+RUN echo "export UNRAR_LIB_PATH='/usr/lib/libunrar.so'" >> /home/odoo/.bashrc
 
 USER odoo
 
