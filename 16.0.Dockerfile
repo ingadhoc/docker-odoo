@@ -131,7 +131,6 @@ RUN mkdir -p $SOURCES/repositories && \
     mkdir -p $DATA_DIR && \
     mkdir -p $CONFIG_DIR && \
     mkdir -p $RESOURCES/GeoIP && \
-    mkdir -p $RESOURCES && \
     chown -R odoo.odoo /home/odoo && \
     sync
 
