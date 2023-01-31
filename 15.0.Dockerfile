@@ -223,6 +223,8 @@ RUN apt-get update \
         mercadopago==2.2.0 \
         # Fix xlrd con lógica de odoo (sistemas-contabilidad)
         xlrd==1.2.0 \
+        # external dependency for mail_autosubscribe (también necesaria para ejecutar casos de test)
+        odoo_test_helper==2.0.2 \
     # purge
     && apt-get purge -yqq build-essential '*-dev' make || true \
     && apt-get -yqq autoremove \
