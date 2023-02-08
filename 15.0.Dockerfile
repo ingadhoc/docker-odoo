@@ -130,12 +130,13 @@ RUN mkdir -p $SOURCES/repositories && \
     mkdir -p $CUSTOM/repositories && \
     mkdir -p $DATA_DIR && \
     mkdir -p $CONFIG_DIR && \
-    mkdir -p $RESOURCES && \
+    mkdir -p $RESOURCES/GeoIP && \
     chown -R odoo.odoo /home/odoo && \
     sync
 
 # Usefull aliases
 RUN echo "alias odoo-shell='odoo shell --shell-interface ipython --no-http --limit-memory-hard=0 --limit-memory-soft=0'" >> /home/odoo/.bashrc
+RUN echo "alias odoo-fix='odoo fixdb --workers=0 --no-xmlrpc'" >> /home/odoo/.bashrc
 
 # Image building scripts
 COPY bin/* /usr/local/bin/
@@ -225,10 +226,32 @@ RUN apt-get update \
         xlrd==1.2.0 \
         # external dependency for mail_autosubscribe (también necesaria para ejecutar casos de test)
         odoo_test_helper==2.0.2 \
+        # geoip
+        geoip2==4.6.0 \
+    # unrar para saas_provider_adhoc y unrar de agip
+    cd && wget https://www.rarlab.com/rar/unrarsrc-5.6.8.tar.gz \
+    && tar -xf unrarsrc-5.6.8.tar.gz \
+    && cd unrar \
+    && apt-get -y install make python-dev \
+    && make lib \
+    && make install-lib \
+    && rm -rf unrarsrc-5.6.8.tar.gz \
+    && rm -rf unrar \
     # purge
     && apt-get purge -yqq build-essential '*-dev' make || true \
     && apt-get -yqq autoremove \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# GEOIP (la key esta generada con cuenta jjs@adhoc.com.ar)
+RUN cd $RESOURCES/GeoIP \
+    && curl "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=b1CaJ9ZB1IBeR8pe&suffix=tar.gz" -o $RESOURCES/GeoIP/GeoLite2-City.tar.gz \
+    && tar -xzf $RESOURCES/GeoIP/GeoLite2-City.tar.gz -C $RESOURCES/GeoIP \
+    && find $RESOURCES/GeoIP/GeoLite2-City_* | grep "GeoLite2-City.mmdb" | xargs -I{} mv {} $RESOURCES/GeoIP \
+    && rm $RESOURCES/GeoIP/GeoLite2-City.tar.gz
+
+# UNRAR para padron agip
+RUN echo "export UNRAR_LIB_PATH='/usr/lib/libunrar.so'" >> /home/odoo/.bashrc
+
 USER odoo
 
 # Entrypoint
