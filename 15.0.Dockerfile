@@ -228,6 +228,8 @@ RUN apt-get update \
         odoo_test_helper==2.0.2 \
         # geoip
         geoip2==4.6.0 \
+        # l10n_cl_edi y probablemente otros (la version la tomamos de runbot data)
+        pdf417gen==0.7.1 \
     # unrar para saas_provider_adhoc y unrar de agip
     cd && wget https://www.rarlab.com/rar/unrarsrc-5.6.8.tar.gz \
     && tar -xf unrarsrc-5.6.8.tar.gz \
