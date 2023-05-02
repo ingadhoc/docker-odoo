@@ -230,6 +230,13 @@ RUN apt-get update \
         pdf417gen==0.7.1 \
         # odoo-module-migrator (OKR kr1.5 - Tecnología)
         git+https://github.com/adhoc-cicd/oca-odoo-module-migrator/@master \
+    # Instalando kubectl & helm por refactor de integración con k8s
+    && curl https://baltocdn.com/helm/signing.asc | sudo apt-key add - \
+    && echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list \
+    # kubectl
+    && curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg \
+    && echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/ \
+    && apt-get -y install helm kubectl \
     # unrar para saas_provider_adhoc y unrar de agip
     cd && wget https://www.rarlab.com/rar/unrarsrc-5.6.8.tar.gz \
     && tar -xf unrarsrc-5.6.8.tar.gz \
