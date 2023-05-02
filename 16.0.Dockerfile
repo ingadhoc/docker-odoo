@@ -101,12 +101,6 @@ RUN build_deps=" \
         pg-activity==3.0.1 \
         phonenumbers==8.13.1 \
     && (python3 -m compileall -q /usr/local/lib/python3.10/ || true) \
-    # Instalando kubectl & helm por refactor de integración con k8s
-    && curl https://baltocdn.com/helm/signing.asc | sudo apt-key add - \
-    && echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list \
-    # kubectl
-    && curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg \
-    && echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/ \
     && apt-get purge -yqq $build_deps \
     && apt-get autopurge -yqq \
     && rm -Rf /var/lib/apt/lists/* /tmp/*
@@ -236,8 +230,6 @@ RUN apt-get update \
         pdf417gen==0.7.1 \
         # odoo-module-migrator (OKR kr1.5 - Tecnología)
         git+https://github.com/adhoc-cicd/oca-odoo-module-migrator/@master \
-    # Instalando kubectl & helm por refactor de integración con k8s
-    && apt-get -y install helm kubectl \
     # unrar para saas_provider_adhoc y unrar de agip
     cd && wget https://www.rarlab.com/rar/unrarsrc-5.6.8.tar.gz \
     && tar -xf unrarsrc-5.6.8.tar.gz \
@@ -251,6 +243,13 @@ RUN apt-get update \
     && apt-get purge -yqq build-essential '*-dev' make || true \
     && apt-get -yqq autoremove \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# helm & kubectl
+RUN curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl" \
+    && chmod +x ./kubectl \
+    && mv ./kubectl /usr/local/bin/kubectl \
+    && curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 \
+    && chmod +x get_helm.sh && ./get_helm.sh
 
 # GEOIP (la key esta generada con cuenta jjs@adhoc.com.ar)
 RUN cd $RESOURCES/GeoIP \
