@@ -230,6 +230,12 @@ RUN apt-get update \
         pdf417gen==0.7.1 \
         # odoo-module-migrator (OKR kr1.5 - Tecnología)
         git+https://github.com/adhoc-cicd/oca-odoo-module-migrator/@master \
+    # helm & kubectl
+    && curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl" \
+    && chmod +x ./kubectl \
+    && mv ./kubectl /usr/local/bin/kubectl \
+    && curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 \
+    && chmod +x get_helm.sh && ./get_helm.sh \
     # unrar para saas_provider_adhoc y unrar de agip
     cd && wget https://www.rarlab.com/rar/unrarsrc-5.6.8.tar.gz \
     && tar -xf unrarsrc-5.6.8.tar.gz \
