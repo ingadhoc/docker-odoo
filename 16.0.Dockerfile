@@ -230,8 +230,8 @@ RUN apt-get update \
         pdf417gen==0.7.1 \
         # odoo-module-migrator (OKR kr1.5 - Tecnología)
         git+https://github.com/adhoc-cicd/oca-odoo-module-migrator/@master \
-        # 20230904 dib: requirement de shopify para sba
-        ShopifyApi==11.0.0 \
+        # 20230907 dib: requirement de shopify para sba (update version)
+        ShopifyApi==12.3.0 \
     # unrar para saas_provider_adhoc y unrar de agip
     cd && wget https://www.rarlab.com/rar/unrarsrc-5.6.8.tar.gz \
     && tar -xf unrarsrc-5.6.8.tar.gz \
