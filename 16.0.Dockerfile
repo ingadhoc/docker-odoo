@@ -183,6 +183,7 @@ RUN apt-get update \
         pyOpenSSL==19.0.0 \
         cryptography==35.0.0 \
         ## cloud platform, odoo y odoo saas
+        nltk \
         redis==2.10.5 \
         google-api-python-client==2.66.0 \
         Odooly==2.1.9 \
