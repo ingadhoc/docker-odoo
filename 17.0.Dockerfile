@@ -199,13 +199,9 @@ RUN apt-get update \
         git+https://github.com/rancher/client-python.git@master \
         boto3==1.26.7 \
         # for pg_activity
-        #psycopg2==2.9.2
         psycopg2-binary \
         ## ingadhoc/website
         html2text==2020.1.16 \
-        ## ingadhoc/odoo-uruguay
-        #python-stdnum==1.17
-        python-stdnum>=1.16 \
         ## ingadhoc/odoo-argentina
         # forzamos version httplib2==0.20.4 porque con lanzamiento de 0.21 (https://pypi.org/project/httplib2/#history) empezo a dar error de ticket 56946
         httplib2==0.20.4 \
@@ -230,7 +226,7 @@ RUN apt-get update \
         unrar==0.4 \
         mercadopago==2.2.0 \
         # geoip
-        #geoip2==2.9.0
+        # odoo utiliza geoip2==2.9.0 pero como nosotros ya venimos con la 4.6 preferimos mantener
         geoip2==4.6.0 \
         # l10n_cl_edi y probablemente otros (la version la tomamos de runbot data)
         pdf417gen==0.7.1 \
