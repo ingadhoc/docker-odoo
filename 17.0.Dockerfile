@@ -179,11 +179,6 @@ RUN apt-get update \
     && pip install --upgrade pip \
     # pip dependencies that require build deps
     && pip install --no-cache-dir \
-        # por problema con cryptography y pyOpenSSL replicamos lo que teniamos
-        #pyopenssl==21.0.0
-        pyOpenSSL==19.0.0 \
-        #cryptography==3.4.8
-        cryptography==35.0.0 \
         ## cloud platform, odoo y odoo saas
         nltk==3.8.1 \
         redis==2.10.5 \
