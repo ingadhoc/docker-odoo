@@ -96,7 +96,7 @@ RUN build_deps=" \
         pdfminer.six==20220319 \
         pysnooper==1.1.1 \
         ipdb==0.13.9 \
-        git+https://github.com/OCA/openupgradelib.git \
+        git+https://github.com/adhoc-cicd/oca-openupgradelib.git@master \
         click-odoo-contrib==1.16.1 \
         pg-activity==3.0.1 \
         phonenumbers==8.13.1 \
