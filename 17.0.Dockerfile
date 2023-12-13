@@ -137,7 +137,7 @@ RUN mkdir -p $SOURCES/repositories && \
 # Usefull aliases
 RUN echo "alias odoo-shell='odoo shell --shell-interface ipython --no-http --limit-memory-hard=0 --limit-memory-soft=0'" >> /home/odoo/.bashrc
 RUN echo "alias odoo-fix='odoo fixdb --workers=0 --no-xmlrpc'" >> /home/odoo/.bashrc
-RUN echo "alias debug-odoo='/usr/local/bin/python3 -m debugpy --listen 0.0.0.0:6000 /home/odoo/.local/bin/odoo'" >> /home/odoo/.bashrc
+RUN echo "alias debug-odoo='/usr/local/bin/python3 -m debugpy --listen 0.0.0.0:6000 /home/odoo/.local/bin/odoo &'" >> /home/odoo/.bashrc
 
 # Image building scripts
 COPY bin/* /usr/local/bin/
