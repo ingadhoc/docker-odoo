@@ -137,6 +137,7 @@ RUN mkdir -p $SOURCES/repositories && \
 # Usefull aliases
 RUN echo "alias odoo-shell='odoo shell --shell-interface ipython --no-http --limit-memory-hard=0 --limit-memory-soft=0'" >> /home/odoo/.bashrc
 RUN echo "alias odoo-fix='odoo fixdb --workers=0 --no-xmlrpc'" >> /home/odoo/.bashrc
+RUN echo "alias debug-odoo='/usr/local/bin/python3 -m debugpy --listen 0.0.0.0:6000 /home/odoo/.local/bin/odoo &'" >> /home/odoo/.bashrc
 
 # Image building scripts
 COPY bin/* /usr/local/bin/
@@ -231,6 +232,8 @@ RUN apt-get update \
         ShopifyApi==12.3.0 \
         # requirements dashboard_ninja, ver dependencias tzdata, python-dateutil, numpy (#33029)
         pandas==2.1.2 \
+        # requeriments para debuggear con code
+        debugpy==1.8.0 \
     # unrar para saas_provider_adhoc y unrar de agip
     cd && wget https://www.rarlab.com/rar/unrarsrc-5.6.8.tar.gz \
     && tar -xf unrarsrc-5.6.8.tar.gz \
