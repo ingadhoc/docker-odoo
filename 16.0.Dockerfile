@@ -251,9 +251,9 @@ RUN apt-get update \
     && apt-get -yqq autoremove \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# GEOIP (la key esta generada con cuenta jjs@adhoc.com.ar)
+# GEOIP (nueva key generada con user devops@adhoc.com.ar, en Bitwarden > Infraestructura)
 RUN cd $RESOURCES/GeoIP \
-    && curl "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=b1CaJ9ZB1IBeR8pe&suffix=tar.gz" -o $RESOURCES/GeoIP/GeoLite2-City.tar.gz \
+    && curl -L -u 1011117:xxxxxxxxxxxxxxxxxxx "https://download.maxmind.com/geoip/databases/GeoLite2-City/download?suffix=tar.gz" -o $RESOURCES/GeoIP/GeoLite2-City.tar.gz \
     && tar -xzf $RESOURCES/GeoIP/GeoLite2-City.tar.gz -C $RESOURCES/GeoIP \
     && find $RESOURCES/GeoIP/GeoLite2-City_* | grep "GeoLite2-City.mmdb" | xargs -I{} mv {} $RESOURCES/GeoIP \
     && rm $RESOURCES/GeoIP/GeoLite2-City.tar.gz
