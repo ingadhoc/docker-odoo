@@ -252,7 +252,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # GEOIP (nueva key generada con user devops@adhoc.com.ar, en Bitwarden > Infraestructura)
-ENV MAXMIND_LICENSE_KEY $MAXMIND_LICENSE_KEY
+ARG MAXMIND_LICENSE_KEY=default
+ENV MAXMIND_LICENSE_KEY=$MAXMIND_LICENSE_KEY
 RUN cd $RESOURCES/GeoIP \
     && curl -L -u 1011117:${MAXMIND_LICENSE_KEY} "https://download.maxmind.com/geoip/databases/GeoLite2-City/download?suffix=tar.gz" -o $RESOURCES/GeoIP/GeoLite2-City.tar.gz \
     && tar -xzf $RESOURCES/GeoIP/GeoLite2-City.tar.gz -C $RESOURCES/GeoIP \
