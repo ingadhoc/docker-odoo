@@ -96,7 +96,8 @@ RUN build_deps=" \
         pdfminer.six==20220319 \
         pysnooper==1.1.1 \
         ipdb==0.13.9 \
-        git+https://github.com/OCA/openupgradelib.git \
+        # Gestión de paquetes pip desde odoo project (#42696)
+        # git+https://github.com/OCA/openupgradelib.git \
         click-odoo-contrib==1.16.1 \
         pg-activity==3.0.1 \
         phonenumbers==8.13.1 \
@@ -185,7 +186,8 @@ RUN apt-get update \
         ## cloud platform, odoo y odoo saas
         redis==2.10.5 \
         google-api-python-client==2.66.0 \
-        Odooly==2.1.9 \
+        # Gestión de paquetes pip desde odoo project (#42696)
+        # Odooly==2.1.9 \
         PyGithub==1.57 \
         git-aggregator==2.1.0 \
         # TODO revisar si sigue siendo necesario
