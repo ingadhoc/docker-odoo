@@ -96,7 +96,8 @@ RUN build_deps=" \
         pdfminer.six==20220319 \
         pysnooper==1.1.1 \
         ipdb==0.13.9 \
-        git+https://github.com/OCA/openupgradelib.git \
+        # Gestión de paquetes pip desde odoo project (#42696)
+        # git+https://github.com/OCA/openupgradelib.git \
         click-odoo-contrib==1.16.1 \
         pg-activity==3.0.1 \
         phonenumbers==8.13.1 \
@@ -185,7 +186,8 @@ RUN apt-get update \
         ## cloud platform, odoo y odoo saas
         redis==2.10.5 \
         google-api-python-client==2.66.0 \
-        Odooly==2.1.9 \
+        # Gestión de paquetes pip desde odoo project (#42696)
+        # Odooly==2.1.9 \
         PyGithub==1.57 \
         git-aggregator==2.1.0 \
         # TODO revisar si sigue siendo necesario
@@ -244,9 +246,11 @@ RUN apt-get update \
     && apt-get -yqq autoremove \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# GEOIP (la key esta generada con cuenta jjs@adhoc.com.ar)
+# GEOIP (nueva key generada con user devops@adhoc.com.ar, en Bitwarden > Infraestructura)
+ARG MAXMIND_LICENSE_KEY=default
+ENV MAXMIND_LICENSE_KEY=$MAXMIND_LICENSE_KEY
 RUN cd $RESOURCES/GeoIP \
-    && curl "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=b1CaJ9ZB1IBeR8pe&suffix=tar.gz" -o $RESOURCES/GeoIP/GeoLite2-City.tar.gz \
+    && curl -L -u 1011117:${MAXMIND_LICENSE_KEY} "https://download.maxmind.com/geoip/databases/GeoLite2-City/download?suffix=tar.gz" -o $RESOURCES/GeoIP/GeoLite2-City.tar.gz \
     && tar -xzf $RESOURCES/GeoIP/GeoLite2-City.tar.gz -C $RESOURCES/GeoIP \
     && find $RESOURCES/GeoIP/GeoLite2-City_* | grep "GeoLite2-City.mmdb" | xargs -I{} mv {} $RESOURCES/GeoIP \
     && rm $RESOURCES/GeoIP/GeoLite2-City.tar.gz
