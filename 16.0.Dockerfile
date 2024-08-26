@@ -251,7 +251,8 @@ RUN apt-get update \
     && apt-get -yqq autoremove \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# GEOIP (nueva key generada con user devops@adhoc.com.ar, en Bitwarden > Infraestructura)
+# GEOIP (key generada con user devops@adhoc.com.ar, en Bitwarden > Infraestructura)
+# Si falla la descarga (Build failed en dockerhub, generar un nuevo token en https://www.maxmind.com/ y reemplazar en variables de dockerhub)
 ARG MAXMIND_LICENSE_KEY=default
 ENV MAXMIND_LICENSE_KEY=$MAXMIND_LICENSE_KEY
 RUN cd $RESOURCES/GeoIP \
