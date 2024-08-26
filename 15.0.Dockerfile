@@ -185,7 +185,7 @@ RUN apt-get update \
         ## cloud platform, odoo y odoo saas
         redis==2.10.5 \
         google-api-python-client==2.66.0 \
-        Odooly==2.1.9 \
+        git+https://github.com/adhoc-cicd/tinyerp-odooly@master \
         PyGithub==1.57 \
         git-aggregator==2.1.0 \
         # TODO revisar si sigue siendo necesario
