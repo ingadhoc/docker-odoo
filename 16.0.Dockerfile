@@ -96,7 +96,8 @@ RUN build_deps=" \
         pdfminer.six==20220319 \
         pysnooper==1.1.1 \
         ipdb==0.13.9 \
-        git+https://github.com/OCA/openupgradelib.git \
+        # Gestión de paquetes pip desde odoo project (#42696)
+        # git+https://github.com/OCA/openupgradelib.git \
         click-odoo-contrib==1.16.1 \
         pg-activity==3.0.1 \
         phonenumbers==8.13.1 \
@@ -186,7 +187,8 @@ RUN apt-get update \
         nltk==3.8.1 \
         redis==2.10.5 \
         google-api-python-client==2.66.0 \
-        Odooly==2.1.9 \
+        # Gestión de paquetes pip desde odoo project (#42696)
+        # Odooly==2.1.9 \
         PyGithub==1.57 \
         git-aggregator==2.1.0 \
         # TODO revisar si sigue siendo necesario
@@ -229,8 +231,8 @@ RUN apt-get update \
         geoip2==4.6.0 \
         # l10n_cl_edi y probablemente otros (la version la tomamos de runbot data)
         pdf417gen==0.7.1 \
-        # odoo-module-migrator (OKR kr1.5 - Tecnología)
-        git+https://github.com/adhoc-cicd/oca-odoo-module-migrator/@master \
+        # Gestión de paquetes pip desde odoo project (#42696)
+        # git+https://github.com/adhoc-cicd/oca-odoo-module-migrator/@master \
         # 20230907 dib: requirement de shopify para sba (update version)
         ShopifyApi==12.3.0 \
         # requirements dashboard_ninja, ver dependencias tzdata, python-dateutil, numpy (#33029)
