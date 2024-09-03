@@ -118,11 +118,11 @@
         org.label-schema.vcs-url="https://github.com/ingadhoc/docker-odoo"
 
     # Create directory structure
-    ENV SOURCES /home/odoo/src
-    ENV CUSTOM /home/odoo/custom
-    ENV RESOURCES /home/odoo/.resources
-    ENV CONFIG_DIR /home/odoo/.config
-    ENV DATA_DIR /home/odoo/data
+    ENV SOURCES=/home/odoo/src
+    ENV CUSTOM=/home/odoo/custom
+    ENV RESOURCES=/home/odoo/.resources
+    ENV CONFIG_DIR=/home/odoo/.config
+    ENV DATA_DIR=/home/odoo/data
 
     ENV OPENERP_SERVER=$CONFIG_DIR/odoo.conf
     ENV ODOO_RC=$OPENERP_SERVER
@@ -205,7 +205,7 @@
             git+https://github.com/pysimplesoap/pysimplesoap@a330d9c4af1b007fe1436f979ff0b9f66613136e \
             git+https://github.com/ingadhoc/pyafipws@py3k \
             ## ingadhoc/aeroo
-            # use this genshi version to fix error when, for eg, you send arguments like "date=True" check this  \https://genshi.edgewall.org/ticket/600
+            # use this genshi version to fix error when, for eg, you send arguments like "date=True" check this https://genshi.edgewall.org/ticket/600
             genshi==0.7.7 \
             git+https://github.com/adhoc-dev/aeroolib@master-fix-ods \
             git+https://github.com/aeroo/currency2text.git \
@@ -237,14 +237,14 @@
             # requirement para test tours
             websocket-client==1.8.0 \
         # unrar para saas_provider_adhoc y unrar de agip
-        cd && wget https://www.rarlab.com/rar/unrarsrc-5.6.8.tar.gz \
+        && cd && wget https://www.rarlab.com/rar/unrarsrc-5.6.8.tar.gz \
         && tar -xf unrarsrc-5.6.8.tar.gz \
         && cd unrar \
         && apt-get -y install make python-dev \
         && make lib \
         && make install-lib \
-        && rm -rf unrarsrc-5.6.8.tar.gz \
-        && rm -rf unrar \
+        && rm -rf /root/unrarsrc-5.6.8.tar.gz \
+        && rm -rf /root/unrar \
         # purge
         && apt-get purge -yqq build-essential '*-dev' make || true \
         && apt-get -yqq autoremove \
@@ -253,7 +253,6 @@
     # GEOIP (key generada con user devops@adhoc.com.ar, en Bitwarden > Infraestructura)
     # Si falla la descarga (Build failed en dockerhub, generar un nuevo token en https://www.maxmind.com/ y reemplazar en variables de dockerhub)
     ARG MAXMIND_LICENSE_KEY=default
-    ENV MAXMIND_LICENSE_KEY=$MAXMIND_LICENSE_KEY
     RUN cd $RESOURCES/GeoIP \
         && curl -L -u 1011117:${MAXMIND_LICENSE_KEY} "https://download.maxmind.com/geoip/databases/GeoLite2-City/download?suffix=tar.gz" -o $RESOURCES/GeoIP/GeoLite2-City.tar.gz \
         && tar -xzf $RESOURCES/GeoIP/GeoLite2-City.tar.gz -C $RESOURCES/GeoIP \
