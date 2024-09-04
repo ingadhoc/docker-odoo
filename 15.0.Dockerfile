@@ -233,7 +233,7 @@ RUN apt-get update \
         # l10n_cl_edi y probablemente otros (la version la tomamos de runbot data)
         pdf417gen==0.7.1 \
     # unrar para saas_provider_adhoc y unrar de agip
-    cd && wget https://www.rarlab.com/rar/unrarsrc-5.6.8.tar.gz \
+    && cd && wget https://www.rarlab.com/rar/unrarsrc-5.6.8.tar.gz \
     && tar -xf unrarsrc-5.6.8.tar.gz \
     && cd unrar \
     && apt-get -y install make python-dev \
