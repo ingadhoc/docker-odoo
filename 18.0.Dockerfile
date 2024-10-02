@@ -1,4 +1,4 @@
-    FROM python:3.10-slim-bullseye
+    FROM python:3.10-slim-bookworm
 
     EXPOSE 8069 8072
 
@@ -58,12 +58,12 @@
         && echo 'deb http://apt.postgresql.org/pub/repos/apt/ bullseye-pgdg main' >> /etc/apt/sources.list.d/postgresql.list \
         && curl -SL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
         && apt-get update \
-        && apt-get install -yqq --no-install-recommends postgresql-client-15 \
+        && apt-get install -yqq --no-install-recommends postgresql-client-16 \
         && apt-get autopurge -yqq \
         && rm -Rf wkhtmltox.deb /var/lib/apt/lists/* /tmp/* \
         && sync
 
-    ARG ODOO_VERSION=17.0
+    ARG ODOO_VERSION=18.0
     ARG ODOO_SOURCE=odoo/odoo
     ENV ODOO_VERSION="$ODOO_VERSION"
     ENV ODOO_SOURCE="$ODOO_SOURCE"
