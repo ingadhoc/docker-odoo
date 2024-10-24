@@ -1,4 +1,4 @@
-FROM python:3.12-slim-bookworm
+FROM python:3.10-slim-bookworm
 
 EXPOSE 8069 8072
 
@@ -101,7 +101,7 @@ RUN build_deps=" \
         click-odoo-contrib==1.16.1 \
         pg-activity==3.0.1 \
         phonenumbers==8.13.1 \
-    && (python3 -m compileall -q /usr/local/lib/python3.12/ || true) \
+    && (python3 -m compileall -q /usr/local/lib/python3.10/ || true) \
     && apt-get purge -yqq $build_deps \
     && apt-get autopurge -yqq \
     && rm -Rf /var/lib/apt/lists/* /tmp/*
