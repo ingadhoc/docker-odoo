@@ -240,7 +240,6 @@ RUN apt-get update \
     cd && wget https://www.rarlab.com/rar/unrarsrc-5.6.8.tar.gz \
     && tar -xf unrarsrc-5.6.8.tar.gz \
     && cd unrar \
-    && apt-get -y install make python-dev \
     && make lib \
     && make install-lib \
     && rm -rf unrarsrc-5.6.8.tar.gz \
