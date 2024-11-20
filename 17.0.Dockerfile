@@ -89,8 +89,13 @@
         " \
         && apt-get update \
         && apt-get install -yqq --no-install-recommends $build_deps \
+        && wget https://raw.githubusercontent.com/$ODOO_SOURCE/$ODOO_VERSION/requirements.txt \
+        # Issue: https://github.com/odoo/odoo/issues/187021
+        && sed -i "s/gevent==21\.8\.0 ; sys_platform != 'win32' and python_version == '3\.10'  # (Jammy)/gevent==21.12.0 ; sys_platform != 'win32' and python_version == '3.10'  # (Jammy)/" requirements.txt \
+        && sed -i "s/geoip2==2\.9\.0/geoip2==4.6.0/" requirements.txt \
+        # End Issue
         && pip install --no-cache-dir \
-            -r https://raw.githubusercontent.com/$ODOO_SOURCE/$ODOO_VERSION/requirements.txt \
+            -r requirements.txt \
             git-aggregator==2.1.0 \
             ipython==8.7.0 \
             pdfminer.six==20220319 \
@@ -102,6 +107,7 @@
             pg-activity==3.0.1 \
             phonenumbers==8.13.1 \
         && (python3 -m compileall -q /usr/local/lib/python3.10/ || true) \
+        && rm requirements.txt \
         && apt-get purge -yqq $build_deps \
         && apt-get autopurge -yqq \
         && rm -Rf /var/lib/apt/lists/* /tmp/*
