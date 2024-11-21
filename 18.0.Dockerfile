@@ -124,11 +124,11 @@ LABEL org.label-schema.schema-version="$VERSION" \
     org.label-schema.vcs-url="https://github.com/ingadhoc/docker-odoo"
 
 # Create directory structure
-ENV SOURCES /home/odoo/src
-ENV CUSTOM /home/odoo/custom
-ENV RESOURCES /home/odoo/.resources
-ENV CONFIG_DIR /home/odoo/.config
-ENV DATA_DIR /home/odoo/data
+ENV SOURCES=/home/odoo/src
+ENV CUSTOM=/home/odoo/custom
+ENV RESOURCES=/home/odoo/.resources
+ENV CONFIG_DIR=/home/odoo/.config
+ENV DATA_DIR=/home/odoo/data
 
 ENV OPENERP_SERVER=$CONFIG_DIR/odoo.conf
 ENV ODOO_RC=$OPENERP_SERVER
@@ -251,13 +251,13 @@ RUN apt-get update \
     && apt-get update \
     && apt-get install --no-install-recommends -y helm \
     # unrar para saas_provider_adhoc y unrar de agip
-    cd && wget https://www.rarlab.com/rar/unrarsrc-5.6.8.tar.gz \
+    && cd && wget https://www.rarlab.com/rar/unrarsrc-5.6.8.tar.gz \
     && tar -xf unrarsrc-5.6.8.tar.gz \
     && cd unrar \
     && make lib \
     && make install-lib \
-    && rm -rf unrarsrc-5.6.8.tar.gz \
-    && rm -rf unrar \
+    && rm -rf /root/unrarsrc-5.6.8.tar.gz \
+    && rm -rf /root/unrar \
     # purge
     && apt-get purge -yqq build-essential '*-dev' make || true \
     && apt-get -yqq autoremove \
