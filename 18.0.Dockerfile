@@ -251,7 +251,7 @@ RUN apt-get update \
     && apt-get update \
     && apt-get install --no-install-recommends -y helm \
     # unrar para saas_provider_adhoc y unrar de agip
-    cd && wget https://www.rarlab.com/rar/unrarsrc-5.6.8.tar.gz \
+    && cd && wget https://www.rarlab.com/rar/unrarsrc-5.6.8.tar.gz \
     && tar -xf unrarsrc-5.6.8.tar.gz \
     && cd unrar \
     && make lib \
