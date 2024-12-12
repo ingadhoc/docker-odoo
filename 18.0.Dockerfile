@@ -244,6 +244,8 @@ RUN apt-get update \
         websocket-client==1.8.0 \
         # required by saas_k8s
         kubernetes==31.0.0 \
+        # Requerimiento IA: 4 - Integrar el modelo en Odoo (#45793)
+        scikit-learn==1.5.2 \
     # required by saas_k8s (Helm)
     && apt-get install --no-install-recommends apt-transport-https curl gnupg --yes \
     && curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | tee /usr/share/keyrings/helm.gpg > /dev/null \
