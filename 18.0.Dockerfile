@@ -188,7 +188,7 @@ RUN apt-get update \
     && pip install --no-cache-dir \
         ## cloud platform, odoo y odoo saas
         nltk==3.8.1 \
-        redis==2.10.5 \
+        redis==5.2.1 \
         google-api-python-client==2.66.0 \
         # Gestión de paquetes pip desde odoo project (#42696)
         # Odooly==2.1.9 \
