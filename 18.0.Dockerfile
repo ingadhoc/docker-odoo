@@ -58,7 +58,7 @@ RUN apt-get -qq update \
     && echo 'deb http://apt.postgresql.org/pub/repos/apt/ bookworm-pgdg main' > /etc/apt/sources.list.d/postgresql.list \
     && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg \
     && apt-get update \
-    && apt-get install -yqq --no-install-recommends postgresql-client-16 \
+    && apt-get install -yqq --no-install-recommends postgresql-client-15 \
     && apt-get autopurge -yqq \
     && rm -Rf wkhtmltox.deb /var/lib/apt/lists/* /tmp/* \
     && sync
@@ -87,14 +87,14 @@ RUN build_deps=" \
         tk-dev \
         zlib1g-dev \
     " \
-    && apt-get update \
+    && apt-get -qq update \
     && apt-get install -yqq --no-install-recommends $build_deps \
     && wget https://raw.githubusercontent.com/$ODOO_SOURCE/$ODOO_VERSION/requirements.txt \
     # Issue: https://github.com/odoo/odoo/issues/187021
     && sed -i "s/gevent==21\.8\.0 ; sys_platform != 'win32' and python_version == '3\.10'  # (Jammy)/gevent==21.12.0 ; sys_platform != 'win32' and python_version == '3.10'  # (Jammy)/" requirements.txt \
     && sed -i "s/geoip2==2\.9\.0/geoip2==4.6.0/" requirements.txt \
     # End Issue
-    && pip install --no-cache-dir \
+    && pip install --no-cache-dir --prefer-binary \
         -r requirements.txt \
         git-aggregator==2.1.0 \
         ipython==8.7.0 \
@@ -144,6 +144,7 @@ RUN mkdir -p $SOURCES/repositories && \
 # Usefull aliases
 RUN echo "alias odoo-shell='odoo shell --shell-interface ipython --no-http --limit-memory-hard=0 --limit-memory-soft=0'" >> /home/odoo/.bashrc
 RUN echo "alias odoo-fix='odoo fixdb --workers=0 --no-xmlrpc'" >> /home/odoo/.bashrc
+RUN echo "alias odoo-restart='kill -HUP 0'" >> /home/odoo/.bashrc
 
 # Image building scripts
 COPY bin/* /usr/local/bin/
@@ -185,7 +186,7 @@ RUN apt-get update \
     # upgrade pip
     && pip install --upgrade pip \
     # pip dependencies that require build deps
-    && pip install --no-cache-dir \
+    && pip install --no-cache-dir --prefer-binary \
         ## cloud platform, odoo y odoo saas
         nltk==3.8.1 \
         redis==5.2.1 \
@@ -249,7 +250,7 @@ RUN apt-get update \
     # required by saas_k8s (Helm)
     && apt-get install --no-install-recommends apt-transport-https curl gnupg --yes \
     && curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | tee /usr/share/keyrings/helm.gpg > /dev/null \
-    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | tee /etc/apt/sources.list.d/helm-stable-debian.list \
     && apt-get update \
     && apt-get install --no-install-recommends -y helm \
     # unrar para saas_provider_adhoc y unrar de agip
