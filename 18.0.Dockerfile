@@ -61,6 +61,8 @@ RUN apt-get -qq update \
     && apt-get install -yqq --no-install-recommends postgresql-client-15 \
     && apt-get autopurge -yqq \
     && rm -Rf wkhtmltox.deb /var/lib/apt/lists/* /tmp/* \
+    && git config --global pull.rebase true \
+    && git config --global init.defaultBranch main \
     && sync
 
 ARG ODOO_VERSION=18.0
@@ -194,7 +196,6 @@ RUN apt-get update \
         # Gestión de paquetes pip desde odoo project (#42696)
         # Odooly==2.1.9 \
         PyGithub==1.57 \
-        git-aggregator==2.1.0 \
         # TODO revisar si sigue siendo necesario
         firebase-admin==6.0.1 \
         transifex-python==3.0.3 \
