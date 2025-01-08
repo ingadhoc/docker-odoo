@@ -146,7 +146,7 @@ RUN mkdir -p $SOURCES/repositories && \
 # Usefull aliases
 RUN echo "alias odoo-shell='odoo shell --shell-interface ipython --no-http --limit-memory-hard=0 --limit-memory-soft=0'" >> /home/odoo/.bashrc
 RUN echo "alias odoo-fix='odoo fixdb --workers=0 --no-xmlrpc'" >> /home/odoo/.bashrc
-RUN echo "alias odoo-restart='kill -HUP 0'" >> /home/odoo/.bashrc
+RUN echo "alias odoo-restart='kill -HUP 1'" >> /home/odoo/.bashrc
 
 # Image building scripts
 COPY bin/* /usr/local/bin/
@@ -192,7 +192,7 @@ RUN apt-get update \
         ## cloud platform, odoo y odoo saas
         nltk==3.8.1 \
         redis==5.2.1 \
-        google-api-python-client==2.66.0 \
+        google-api-python-client==2.157.0 \
         # Gestión de paquetes pip desde odoo project (#42696)
         # Odooly==2.1.9 \
         PyGithub==1.57 \
