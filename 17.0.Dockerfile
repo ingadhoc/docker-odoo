@@ -247,6 +247,8 @@
             kubernetes==31.0.0 \
             # Requerimiento IA: 4 - Integrar el modelo en Odoo (#45793)
             scikit-learn==1.5.2 \
+            # Requerido por módulo oca - logging_json
+            python-json-logger==3.2.1 \
         # required by saas_k8s (Helm)
         && apt-get install --no-install-recommends apt-transport-https curl gnupg --yes \
         && curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | tee /usr/share/keyrings/helm.gpg > /dev/null \
