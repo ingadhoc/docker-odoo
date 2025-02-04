@@ -248,12 +248,8 @@ RUN apt-get update \
         kubernetes==31.0.0 \
         # Requerimiento IA: 4 - Integrar el modelo en Odoo (#45793)
         scikit-learn==1.5.2 \
-    # required by saas_k8s (Helm)
-    && apt-get install --no-install-recommends apt-transport-https curl gnupg --yes \
-    && curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | tee /usr/share/keyrings/helm.gpg > /dev/null \
-    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | tee /etc/apt/sources.list.d/helm-stable-debian.list \
-    && apt-get update \
-    && apt-get install --no-install-recommends -y helm \
+        # Requerido por módulo oca - logging_json
+        python-json-logger==3.2.1 \
     # unrar para saas_provider_adhoc y unrar de agip
     && cd && wget https://www.rarlab.com/rar/unrarsrc-5.6.8.tar.gz \
     && tar -xf unrarsrc-5.6.8.tar.gz \
