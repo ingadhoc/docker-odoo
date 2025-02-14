@@ -201,6 +201,8 @@ RUN apt-get update \
         transifex-python==3.0.3 \
         dnspython3==1.15.0 \
         google-cloud-storage==2.6.0 \
+        # Used by adhoc provider (saas_k8s)
+        google-cloud-compute==1.25.0 \
         git+https://github.com/rancher/client-python.git@master \
         boto3==1.26.7 \
         # for pg_activity
