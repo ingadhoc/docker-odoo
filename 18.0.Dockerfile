@@ -252,6 +252,8 @@ RUN apt-get update \
         scikit-learn==1.5.2 \
         # Requerido por módulo oca - logging_json
         python-json-logger==3.2.1 \
+        # MPV agentes de IA en odoo (#49259)
+        openai==1.65.4 \
     # unrar para saas_provider_adhoc y unrar de agip
     && cd && wget https://www.rarlab.com/rar/unrarsrc-5.6.8.tar.gz \
     && tar -xf unrarsrc-5.6.8.tar.gz \
