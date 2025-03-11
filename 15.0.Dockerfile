@@ -97,7 +97,7 @@ RUN build_deps=" \
         pysnooper==1.1.1 \
         ipdb==0.13.9 \
         # Gestión de paquetes pip desde odoo project (#42696)
-        # git+https://github.com/OCA/openupgradelib.git \
+        git+https://github.com/OCA/openupgradelib.git@73f7b8fda0f5102f7bd58df831b39e4e1c5a180c \
         click-odoo-contrib==1.16.1 \
         pg-activity==3.0.1 \
         phonenumbers==8.13.1 \
