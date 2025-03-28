@@ -240,7 +240,7 @@ RUN apt-get update \
         # Gestión de paquetes pip desde odoo project (#42696)
         # git+https://github.com/adhoc-cicd/oca-odoo-module-migrator/@master \
         # 20230907 dib: requirement de shopify para sba (update version)
-        ShopifyApi==12.3.0 \
+        ShopifyApi==12.7.0 \
         # requirements dashboard_ninja, ver dependencias tzdata, python-dateutil, numpy (#33029)
         pandas==2.1.2 \
         openpyxl==3.1.2 \
